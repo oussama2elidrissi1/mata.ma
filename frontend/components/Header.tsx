@@ -117,7 +117,7 @@ export default function Header() {
               {t('accreditation')}
             </Link>
             <Link href="/join" className="px-4 py-2 rounded-full hover:bg-gray-100 transition-colors" style={{ color: '#333333' }}>
-              {t('join')}
+              {t('joinLink')}
             </Link>
             <Link 
               href="/news" 
@@ -131,7 +131,7 @@ export default function Header() {
               {t('news')}
             </Link>
             <Link href="/partners" className="px-4 py-2 rounded-full hover:bg-gray-100 transition-colors" style={{ color: '#333333' }}>
-              {t('partners')}
+              {t('partnersLink')}
             </Link>
             <Link href="/about" className="px-4 py-2 rounded-full hover:bg-gray-100 transition-colors" style={{ color: '#333333' }}>
               {t('about')}

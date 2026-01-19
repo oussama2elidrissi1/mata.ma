@@ -15,9 +15,9 @@ const translations: Record<Language, Translations> = {
     directory: 'Annuaire',
     events: 'Événements',
     accreditation: 'Accréditation',
-    join: 'Adhérer',
+    joinLink: 'Adhérer',
     news: 'Actualités',
-    partners: 'Partenaires',
+    partnersLink: 'Partenaires',
     about: 'À Propos',
     contact: 'Contact',
     admin: 'Admin',
@@ -68,12 +68,12 @@ const translations: Record<Language, Translations> = {
     viewProfile: 'Voir le profil',
     
     // Actor Detail
-    contact: 'Contacter',
+    contactButton: 'Contacter',
     requestAccreditation: 'Demander l\'accréditation',
-    about: 'À propos',
+    aboutSection: 'À propos',
     keyInfo: 'Informations clés',
     memberSince: 'Membre depuis',
-    certifications: 'Certifications',
+    certificationsLabel: 'Certifications',
     services: 'Services proposés',
     gallery: 'Galerie',
     needHelp: 'Besoin d\'aide?',
@@ -97,7 +97,7 @@ const translations: Record<Language, Translations> = {
     // Admin
     dashboard: 'Dashboard',
     actors: 'Acteurs',
-    associations: 'Associations',
+    associationsLink: 'Associations',
     pending: 'En attente',
     verified: 'Vérifiés',
     suspended: 'Suspendus',
@@ -304,7 +304,7 @@ const translations: Record<Language, Translations> = {
     },
     
     // About page
-    about: {
+    aboutPage: {
       title: 'À propos de MATA',
       subtitle: 'Nous sommes la plateforme de référence pour les professionnels du tourisme, offrant un annuaire vérifié, des ressources de qualité et un réseau collaboratif dynamique.',
       mission: 'Notre Mission',
@@ -346,7 +346,7 @@ const translations: Record<Language, Translations> = {
     },
     
     // Contact page
-    contact: {
+    contactPage: {
       title: 'Contactez-nous',
       subtitle: 'Une question ? Une suggestion ? Notre équipe est à votre écoute',
       info: {
@@ -404,9 +404,9 @@ const translations: Record<Language, Translations> = {
     directory: 'Directory',
     events: 'Events',
     accreditation: 'Accreditation',
-    join: 'Join',
+    joinLink: 'Join',
     news: 'News',
-    partners: 'Partners',
+    partnersLink: 'Partners',
     about: 'About',
     contact: 'Contact',
     admin: 'Admin',
@@ -453,12 +453,12 @@ const translations: Record<Language, Translations> = {
     viewProfile: 'View profile',
     
     // Actor Detail
-    contact: 'Contact',
+    contactButton: 'Contact',
     requestAccreditation: 'Request Accreditation',
-    about: 'About',
+    aboutSection: 'About',
     keyInfo: 'Key Information',
     memberSince: 'Member since',
-    certifications: 'Certifications',
+    certificationsLabel: 'Certifications',
     services: 'Services Offered',
     gallery: 'Gallery',
     needHelp: 'Need help?',
@@ -482,6 +482,7 @@ const translations: Record<Language, Translations> = {
     // Admin
     dashboard: 'Dashboard',
     actors: 'Actors',
+    associationsLink: 'Associations',
     pending: 'Pending',
     verified: 'Verified',
     suspended: 'Suspended',
@@ -688,7 +689,7 @@ const translations: Record<Language, Translations> = {
     },
     
     // About page
-    about: {
+    aboutPage: {
       title: 'About MATA',
       subtitle: 'We are the reference platform for tourism professionals, offering a verified directory, quality resources and a dynamic collaborative network.',
       mission: 'Our Mission',
@@ -730,7 +731,7 @@ const translations: Record<Language, Translations> = {
     },
     
     // Contact page
-    contact: {
+    contactPage: {
       title: 'Contact Us',
       subtitle: 'A question? A suggestion? Our team is listening to you',
       info: {
@@ -788,9 +789,9 @@ const translations: Record<Language, Translations> = {
     directory: 'الدليل',
     events: 'الأحداث',
     accreditation: 'الاعتماد',
-    join: 'انضم',
+    joinLink: 'انضم',
     news: 'الأخبار',
-    partners: 'الشركاء',
+    partnersLink: 'الشركاء',
     about: 'من نحن',
     contact: 'اتصل بنا',
     admin: 'الإدارة',
@@ -837,12 +838,12 @@ const translations: Record<Language, Translations> = {
     viewProfile: 'عرض الملف الشخصي',
     
     // Actor Detail
-    contact: 'اتصل',
+    contactButton: 'اتصل',
     requestAccreditation: 'طلب الاعتماد',
-    about: 'حول',
+    aboutSection: 'حول',
     keyInfo: 'معلومات رئيسية',
     memberSince: 'عضو منذ',
-    certifications: 'الشهادات',
+    certificationsLabel: 'الشهادات',
     services: 'الخدمات المقدمة',
     gallery: 'معرض الصور',
     needHelp: 'تحتاج مساعدة؟',
@@ -1072,7 +1073,7 @@ const translations: Record<Language, Translations> = {
     },
     
     // About page
-    about: {
+    aboutPage: {
       title: 'حول MATA',
       subtitle: 'نحن المنصة المرجعية للمهنيين في مجال السياحة، نقدم دليلاً موثقاً وموارد عالية الجودة وشبكة تعاونية ديناميكية.',
       mission: 'مهمتنا',
@@ -1114,7 +1115,7 @@ const translations: Record<Language, Translations> = {
     },
     
     // Contact page
-    contact: {
+    contactPage: {
       title: 'اتصل بنا',
       subtitle: 'سؤال؟ اقتراح؟ فريقنا في خدمتك',
       info: {

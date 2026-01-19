@@ -16,8 +16,10 @@ import { formatRating, isValidRating } from '@/lib/utils'
 import AccreditationRequestModal from '@/components/AccreditationRequestModal'
 import { getCurrentUser, getAuthToken } from '@/lib/auth'
 import api from '@/lib/api'
+import { useTranslation } from '@/lib/i18n'
 
 export default function ActorDetailPage() {
+  const { t } = useTranslation()
   const params = useParams()
   const router = useRouter()
   const [actor, setActor] = useState<TourismActor | null>(null)
@@ -87,10 +89,12 @@ export default function ActorDetailPage() {
 
   const loadActor = async () => {
     try {
+      setLoading(true)
       const data = await fetchActor(Number(params.id))
       setActor(data)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading actor:', error)
+      // L'erreur sera gérée par l'affichage conditionnel (!actor)
     } finally {
       setLoading(false)
     }
@@ -106,11 +110,11 @@ export default function ActorDetailPage() {
     try {
       const payload = { [field]: editFormData[field] }
       await api.put('/actor/update', payload)
-      alert('Champ mis à jour avec succès !')
+      alert('Champ mis a jour avec succes !')
       setEditingField(null)
       loadActor()
     } catch (error: any) {
-      alert(error.response?.data?.message || 'Erreur lors de la mise à jour du champ.')
+      alert(error.response?.data?.message || 'Erreur lors de la mise a jour du champ.')
     } finally {
       setSaving(false)
     }
@@ -150,10 +154,10 @@ export default function ActorDetailPage() {
       <div className="min-h-screen bg-white">
         <Header />
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-          <p className="text-gray-600 text-lg font-medium mb-4">Acteur non trouvé</p>
+          <p className="text-gray-600 text-lg font-medium mb-4">Acteur non trouve</p>
           <Link href="/actors" className="text-blue-900 hover:text-blue-700 font-semibold transition-colors duration-200 inline-flex items-center gap-2">
             <ArrowLeft className="w-5 h-5" />
-            Retour à l'annuaire
+            Retour a l'annuaire
           </Link>
         </div>
         <Footer />
@@ -162,7 +166,7 @@ export default function ActorDetailPage() {
   }
 
   const typeLabels: Record<string, string> = {
-    hotel: 'Hôtel',
+    hotel: 'Hotel',
     restaurant: 'Restaurant',
     travel_agency: 'Agence de Voyage',
     tour_guide: 'Guide Touristique',
@@ -175,10 +179,9 @@ export default function ActorDetailPage() {
     luxury: 'Luxe',
     premium: 'Premium',
     standard: 'Standard',
-    budget: 'Économique',
+    budget: 'Economique',
   }
 
-  // Utiliser la première image comme bannière, ou une image par défaut
   const bannerImage = actor.images && actor.images.length > 0 
     ? actor.images[0] 
     : 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=400&fit=crop'
@@ -187,7 +190,6 @@ export default function ActorDetailPage() {
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Header Banner Section */}
       <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
         <img
           src={bannerImage}
@@ -229,31 +231,28 @@ export default function ActorDetailPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back Button */}
         <div className="mb-8">
           <Link
             href="/actors"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-all duration-200 font-medium group"
           >
             <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-            <span>Retour à l'annuaire</span>
+            <span>Retour a l'annuaire</span>
           </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Status Badges */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="px-5 py-2.5 border-2 border-blue-500 rounded-xl text-blue-700 font-semibold flex items-center gap-2.5 bg-white shadow-sm hover:shadow-md transition-all duration-200">
                 <Star className="w-5 h-5 fill-blue-500 text-blue-500" />
-                {actor.accreditation_number ? 'Accrédité' : 'Standard'}
+                {actor.accreditation_number ? 'Accredite' : 'Standard'}
               </span>
               {actor.accreditation_number && actor.accreditation_date && (
                 <span className="px-5 py-2.5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl text-green-700 font-semibold flex items-center gap-2.5 shadow-sm hover:shadow-md transition-all duration-200">
                   <CheckCircle2 className="w-5 h-5 text-green-600" />
                   <Calendar className="w-5 h-5 text-green-600" />
-                  Accrédité depuis {new Date(actor.accreditation_date).toLocaleDateString('fr-FR', { 
+                  Accredite depuis {new Date(actor.accreditation_date).toLocaleDateString('fr-FR', { 
                     day: '2-digit', 
                     month: '2-digit', 
                     year: 'numeric' 
@@ -262,10 +261,9 @@ export default function ActorDetailPage() {
               )}
             </div>
 
-            {/* À propos */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow duration-300">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">À propos</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">{t('aboutSection')}</h2>
                 {isOwner && !editingField && (
                   <button
                     onClick={() => handleEdit('description', actor.description)}
@@ -282,7 +280,7 @@ export default function ActorDetailPage() {
                     onChange={(e) => setEditFormData({ description: e.target.value })}
                     rows={6}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white transition-all duration-200 font-normal"
-                    placeholder="Décrivez votre entreprise..."
+                    placeholder="Decrivez votre entreprise..."
                   />
                   <div className="flex gap-3">
                     <button
@@ -305,14 +303,13 @@ export default function ActorDetailPage() {
                 <p className="text-gray-700 leading-relaxed text-base font-normal">{actor.description}</p>
               ) : isOwner ? (
                 <div className="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
-                  <p className="text-sm text-blue-800 font-medium">Aucune description. Cliquez sur l'icône d'édition pour en ajouter une.</p>
+                  <p className="text-sm text-blue-800 font-medium">Aucune description. Cliquez sur l'icone d'edition pour en ajouter une.</p>
                 </div>
               ) : (
                 <p className="text-gray-500 italic font-normal">Aucune description disponible.</p>
               )}
             </div>
 
-            {/* Services proposés */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow duration-300">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Services Offerts</h2>
@@ -388,7 +385,7 @@ export default function ActorDetailPage() {
                 </div>
               ) : isOwner ? (
                 <div className="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
-                  <p className="text-sm text-blue-800 font-medium">Aucun service. Cliquez sur l'icône d'édition pour en ajouter.</p>
+                  <p className="text-sm text-blue-800 font-medium">Aucun service. Cliquez sur l'icone d'edition pour en ajouter.</p>
                 </div>
               ) : (
                 <p className="text-gray-500 italic font-normal">Aucun service disponible.</p>
@@ -396,12 +393,10 @@ export default function ActorDetailPage() {
             </div>
           </div>
 
-          {/* Right Column - Contact Information */}
           <div className="lg:col-span-1">
             <div className="bg-gray-50 rounded-2xl shadow-sm border border-gray-200 p-8 sticky top-24 hover:shadow-md transition-shadow duration-300">
               <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 tracking-tight">Informations de Contact</h3>
               <div className="space-y-5">
-                {/* Address */}
                 <div className="flex items-start gap-3.5">
                   <MapPin className="w-6 h-6 text-orange-500 flex-shrink-0 mt-0.5" />
                   <div>
@@ -410,7 +405,6 @@ export default function ActorDetailPage() {
                   </div>
                 </div>
 
-                {/* Phone */}
                 {actor.phone && (
                   <div className="flex items-center gap-3.5">
                     <Phone className="w-6 h-6 text-orange-500 flex-shrink-0" />
@@ -420,7 +414,6 @@ export default function ActorDetailPage() {
                   </div>
                 )}
 
-                {/* Email */}
                 {actor.email && (
                   <div className="flex items-center gap-3.5">
                     <Mail className="w-6 h-6 text-orange-500 flex-shrink-0" />
@@ -430,7 +423,6 @@ export default function ActorDetailPage() {
                   </div>
                 )}
 
-                {/* Website */}
                 {actor.website && (
                   <div className="flex items-center gap-3.5">
                     <Globe className="w-6 h-6 text-orange-500 flex-shrink-0" />
@@ -446,12 +438,10 @@ export default function ActorDetailPage() {
                 )}
               </div>
 
-              {/* Contact Button */}
               <button className="w-full mt-8 px-6 py-3.5 bg-blue-900 text-white rounded-xl hover:bg-blue-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                Contacter
+                {t('contactButton')}
               </button>
 
-              {/* Accreditation Request Button */}
               {!actor.user_id && !isOwner && (
                 <>
                   {hasPendingRequest ? (
@@ -461,7 +451,7 @@ export default function ActorDetailPage() {
                         <div>
                           <p className="font-semibold text-sm mb-1">Demande en cours</p>
                           <p className="text-xs text-amber-700 leading-relaxed">
-                            Une demande d'accréditation est déjà en attente de validation.
+                            Une demande d'accreditation est deja en attente de validation.
                           </p>
                         </div>
                       </div>
@@ -472,7 +462,7 @@ export default function ActorDetailPage() {
                       className="w-full mt-4 px-6 py-3.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-xl hover:from-amber-700 hover:to-orange-700 transition-all duration-200 font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                     >
                       <Award className="w-5 h-5" />
-                      Demander l'accréditation
+                      Demander l'accreditation
                     </button>
                   )}
                 </>
@@ -484,7 +474,6 @@ export default function ActorDetailPage() {
 
       <Footer />
 
-      {/* Accreditation Request Modal */}
       {showAccreditationModal && actor && (
         <AccreditationRequestModal
           actorId={actor.id}

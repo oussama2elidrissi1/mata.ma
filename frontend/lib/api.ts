@@ -102,9 +102,17 @@ export const fetchActors = async (params?: string): Promise<TourismActor[]> => {
 export const fetchActor = async (id: number): Promise<TourismActor> => {
   try {
     const response = await api.get<ApiResponse<TourismActor>>(`/tourism-actors/${id}`)
-    return response.data.data
-  } catch (error) {
+    
+    if (response.data.success && response.data.data) {
+      return response.data.data
+    }
+    
+    throw new Error(response.data.message || 'Acteur non trouvé')
+  } catch (error: any) {
     console.error('Error fetching actor:', error)
+    if (error.response?.status === 404) {
+      throw new Error('Acteur non trouvé')
+    }
     throw error
   }
 }
@@ -206,9 +214,17 @@ export const fetchNews = async (params?: string): Promise<News[]> => {
 export const fetchNewsArticle = async (id: number): Promise<News> => {
   try {
     const response = await api.get<ApiResponse<News>>(`/news/${id}`)
-    return response.data.data
-  } catch (error) {
+    
+    if (response.data.success && response.data.data) {
+      return response.data.data
+    }
+    
+    throw new Error(response.data.message || 'Article non trouvé')
+  } catch (error: any) {
     console.error('Error fetching news article:', error)
+    if (error.response?.status === 404) {
+      throw new Error('Article non trouvé')
+    }
     throw error
   }
 }

@@ -52,36 +52,36 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Mail,
-      title: t('contact.info.email.title'),
+      title: t('contactPage.info.email.title'),
       content: 'contact@mata.ma',
       link: 'mailto:contact@mata.ma'
     },
     {
       icon: Phone,
-      title: t('contact.info.phone.title'),
+      title: t('contactPage.info.phone.title'),
       content: '+212 5 22 12 34 56',
       link: 'tel:+212522123456'
     },
     {
       icon: MapPin,
-      title: t('contact.info.address.title'),
-      content: t('contact.info.address.content'),
+      title: t('contactPage.info.address.title'),
+      content: t('contactPage.info.address.content'),
       link: null
     }
   ]
 
   const faqs = [
     {
-      question: t('contact.faq.profile.question'),
-      answer: t('contact.faq.profile.answer')
+      question: t('contactPage.faq.profile.question'),
+      answer: t('contactPage.faq.profile.answer')
     },
     {
-      question: t('contact.faq.services.question'),
-      answer: t('contact.faq.services.answer')
+      question: t('contactPage.faq.services.question'),
+      answer: t('contactPage.faq.services.answer')
     },
     {
-      question: t('contact.faq.verification.question'),
-      answer: t('contact.faq.verification.answer')
+      question: t('contactPage.faq.verification.question'),
+      answer: t('contactPage.faq.verification.answer')
     }
   ]
 
@@ -99,13 +99,13 @@ export default function Contact() {
             variants={fadeIn('up', 0.2)}
             className="text-4xl md:text-5xl font-bold mb-6"
           >
-            {t('contact.title')}
+            {t('contactPage.title')}
           </motion.h1>
           <motion.p
             variants={fadeIn('up', 0.3)}
             className="text-xl text-blue-100 max-w-2xl mx-auto"
           >
-            {t('contact.subtitle')}
+            {t('contactPage.subtitle')}
           </motion.p>
         </motion.div>
       </section>
@@ -148,7 +148,7 @@ export default function Contact() {
               viewport={{ once: true }}
             >
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-                <h2 className="text-2xl font-bold mb-6">{t('contact.form.title')}</h2>
+                <h2 className="text-2xl font-bold mb-6">{t('contactPage.form.title')}</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -161,7 +161,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:border-red-600 transition-all"
-                      placeholder={t('contact.form.namePlaceholder')}
+                      placeholder={t('contactPage.form.namePlaceholder')}
                     />
                   </div>
 
@@ -176,7 +176,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:border-red-600 transition-all"
-                      placeholder={t('contact.form.emailPlaceholder')}
+                      placeholder={t('contactPage.form.emailPlaceholder')}
                     />
                   </div>
 
@@ -191,7 +191,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:border-red-600 transition-all"
-                      placeholder={t('contact.form.subjectPlaceholder')}
+                      placeholder={t('contactPage.form.subjectPlaceholder')}
                     />
                   </div>
 
@@ -206,7 +206,7 @@ export default function Contact() {
                       required
                       rows={6}
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:border-red-600 transition-all resize-none"
-                      placeholder={t('contact.form.messagePlaceholder')}
+                      placeholder={t('contactPage.form.messagePlaceholder')}
                     />
                   </div>
 
@@ -218,7 +218,7 @@ export default function Contact() {
 
                   {submitStatus === 'error' && (
                     <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-                      {t('contact.form.error')}
+                      {t('contactPage.form.error')}
                     </div>
                   )}
 
@@ -245,7 +245,7 @@ export default function Contact() {
               className="space-y-6"
             >
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-                <h2 className="text-2xl font-bold mb-6">{t('contact.faq.title')}</h2>
+                <h2 className="text-2xl font-bold mb-6">{t('contactPage.faq.title')}</h2>
                 <div className="space-y-6">
                   {faqs.map((faq, index) => (
                     <div key={index}>
@@ -260,9 +260,9 @@ export default function Contact() {
               </div>
 
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100" style={{ backgroundColor: 'rgba(204, 0, 0, 0.05)' }}>
-                <h3 className="font-semibold text-lg mb-3">{t('contact.help.title')}</h3>
+                <h3 className="font-semibold text-lg mb-3">{t('contactPage.help.title')}</h3>
                 <p className="text-gray-700 mb-4">
-                  {t('contact.help.description')}
+                  {t('contactPage.help.description')}
                 </p>
                 <a 
                   href="tel:+212522123456" 
@@ -272,7 +272,7 @@ export default function Contact() {
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#CC0000'}
                 >
                   <Phone className="w-5 h-5" />
-                  <span>{t('contact.help.call')}</span>
+                  <span>{t('contactPage.help.call')}</span>
                 </a>
               </div>
             </motion.div>
