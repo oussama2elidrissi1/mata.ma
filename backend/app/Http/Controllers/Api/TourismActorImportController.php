@@ -73,9 +73,10 @@ class TourismActorImportController extends Controller
         $file = $request->file('file');
         $extension = strtolower($file->getClientOriginalExtension());
         
-        $total = 0;
-        $success = 0;
-        $errors = [];
+            $total = 0;
+            $success = 0;
+            $skipped = 0; // Acteurs déjà existants
+            $errors = [];
 
         try {
             // Lire le fichier
@@ -142,6 +143,7 @@ class TourismActorImportController extends Controller
                     'result' => [
                         'total' => 0,
                         'success' => 0,
+                        'skipped' => 0,
                         'errors' => ['Impossible de lire le fichier. Vérifiez que le format est correct.']
                     ]
                 ], 422);
@@ -157,6 +159,7 @@ class TourismActorImportController extends Controller
                     'result' => [
                         'total' => 0,
                         'success' => 0,
+                        'skipped' => 0,
                         'errors' => []
                     ]
                 ], 422);
@@ -307,6 +310,7 @@ class TourismActorImportController extends Controller
                     'result' => [
                         'total' => 0,
                         'success' => 0,
+                        'skipped' => 0,
                         'errors' => [
                             'Colonnes requises : ' . implode(', ', $missingFields),
                             'Colonnes détectées : ' . $detectedHeaders,
@@ -502,25 +506,65 @@ class TourismActorImportController extends Controller
                         continue;
                     }
 
-                    // Créer l'acteur (gérer les doublons d'accreditation_number)
-                    try {
-                        TourismActor::create($data);
-                        $success++;
-                    } catch (\Illuminate\Database\QueryException $e) {
-                        // Si erreur de contrainte unique sur accreditation_number, réessayer sans
-                        if ($e->getCode() == '23000' && strpos($e->getMessage(), 'accreditation_number') !== false) {
-                            unset($data['accreditation_number']);
-                            unset($data['accreditation_date']);
-                            unset($data['accreditation_expiry']);
-                            try {
-                                TourismActor::create($data);
-                                $success++;
-                                $errors[] = "Ligne {$i}: Numéro d'accréditation en doublon, acteur créé sans numéro";
-                            } catch (\Exception $e2) {
-                                $errors[] = "Ligne {$i}: " . $e2->getMessage();
+                    // Vérifier si l'acteur existe déjà
+                    $existingActor = null;
+                    
+                    // Recherche par numéro d'accréditation si présent
+                    if (!empty($data['accreditation_number'])) {
+                        $existingActor = TourismActor::where('accreditation_number', $data['accreditation_number'])->first();
+                    }
+                    
+                    // Si pas trouvé par accréditation, chercher par nom + ville
+                    if (!$existingActor && !empty($data['name']) && !empty($data['city'])) {
+                        $existingActor = TourismActor::where('name', $data['name'])
+                            ->where('city', $data['city'])
+                            ->first();
+                    }
+                    
+                    // Si pas trouvé, chercher par email si présent
+                    if (!$existingActor && !empty($data['email'])) {
+                        $existingActor = TourismActor::where('email', $data['email'])->first();
+                    }
+                    
+                    // Si l'acteur existe déjà, le mettre à jour au lieu de créer un doublon
+                    if ($existingActor) {
+                        try {
+                            // Mettre à jour l'acteur existant avec les nouvelles données
+                            $updateData = $data;
+                            // Ne pas changer l'ID ni créer de doublon d'accréditation
+                            if (isset($updateData['accreditation_number']) && 
+                                $existingActor->accreditation_number && 
+                                $updateData['accreditation_number'] !== $existingActor->accreditation_number) {
+                                // Si l'acteur existant a déjà un numéro d'accréditation différent, ne pas le changer
+                                unset($updateData['accreditation_number']);
                             }
-                        } else {
-                            throw $e;
+                            
+                            $existingActor->update($updateData);
+                            $skipped++;
+                        } catch (\Exception $e) {
+                            $errors[] = "Ligne {$i}: Erreur lors de la mise à jour de l'acteur existant - " . $e->getMessage();
+                        }
+                    } else {
+                        // Créer l'acteur (gérer les doublons d'accreditation_number)
+                        try {
+                            TourismActor::create($data);
+                            $success++;
+                        } catch (\Illuminate\Database\QueryException $e) {
+                            // Si erreur de contrainte unique sur accreditation_number, réessayer sans
+                            if ($e->getCode() == '23000' && strpos($e->getMessage(), 'accreditation_number') !== false) {
+                                unset($data['accreditation_number']);
+                                unset($data['accreditation_date']);
+                                unset($data['accreditation_expiry']);
+                                try {
+                                    TourismActor::create($data);
+                                    $success++;
+                                    $errors[] = "Ligne {$i}: Numéro d'accréditation en doublon, acteur créé sans numéro";
+                                } catch (\Exception $e2) {
+                                    $errors[] = "Ligne {$i}: " . $e2->getMessage();
+                                }
+                            } else {
+                                throw $e;
+                            }
                         }
                     }
 
@@ -533,12 +577,19 @@ class TourismActorImportController extends Controller
                 }
             }
 
+            $message = "Import terminé : {$success} acteur(s) créé(s)";
+            if ($skipped > 0) {
+                $message .= ", {$skipped} acteur(s) déjà existant(s) mis à jour";
+            }
+            $message .= " sur {$total} ligne(s)";
+            
             return response()->json([
                 'success' => true,
-                'message' => "Import terminé : {$success} acteur(s) créé(s) sur {$total} ligne(s)",
+                'message' => $message,
                 'result' => [
                     'total' => $total,
                     'success' => $success,
+                    'skipped' => $skipped,
                     'errors' => $errors
                 ]
             ]);
@@ -555,6 +606,7 @@ class TourismActorImportController extends Controller
                 'result' => [
                     'total' => $total,
                     'success' => $success,
+                    'skipped' => $skipped,
                     'errors' => array_merge($errors, [$e->getMessage()])
                 ]
             ], 500);

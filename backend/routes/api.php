@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\AccreditationController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\Api\SettingController;
 
 // Routes d'authentification
 Route::prefix('auth')->group(function () {
@@ -47,6 +48,8 @@ Route::post('/accreditation-requests', [\App\Http\Controllers\Api\AccreditationR
 Route::middleware('auth:sanctum')->prefix('accreditation-requests')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\AccreditationRequestController::class, 'index']);
     Route::get('/{id}', [\App\Http\Controllers\Api\AccreditationRequestController::class, 'show']);
+    Route::post('/{id}/approve', [\App\Http\Controllers\Api\AccreditationRequestController::class, 'approve']);
+    Route::post('/{id}/reject', [\App\Http\Controllers\Api\AccreditationRequestController::class, 'reject']);
 });
 
 // Routes pour les acteurs (gestion de leur propre compte)
@@ -92,6 +95,18 @@ Route::middleware('auth:sanctum')->prefix('news')->group(function () {
     Route::post('/', [\App\Http\Controllers\Api\NewsController::class, 'store']);
     Route::put('/{id}', [\App\Http\Controllers\Api\NewsController::class, 'update']);
     // Fallback for multipart/form-data updates: POST + _method=PUT (common Laravel pattern)
-    Route::post('/{id}', [\App\Http\Controllers\Api\NewsController::class, 'update']);
-    Route::delete('/{id}', [\App\Http\Controllers\Api\NewsController::class, 'destroy']);
+        Route::post('/{id}', [\App\Http\Controllers\Api\NewsController::class, 'update']);
+        Route::delete('/{id}', [\App\Http\Controllers\Api\NewsController::class, 'destroy']);
+    });
+
+// Routes publiques pour le contact
+Route::post('/contact', [SettingController::class, 'contact']);
+
+// Routes pour la gestion des paramètres (admin uniquement)
+Route::middleware('auth:sanctum')->prefix('settings')->group(function () {
+    Route::get('/', [SettingController::class, 'index']);
+    Route::get('/{key}', [SettingController::class, 'show']);
+    Route::put('/{key}', [SettingController::class, 'update']);
+    Route::post('/bulk-update', [SettingController::class, 'bulkUpdate']);
+    Route::post('/upload-logo', [SettingController::class, 'uploadLogo']);
 });

@@ -138,4 +138,66 @@ class AccreditationRequestController extends Controller
             'data' => $request
         ]);
     }
+
+    /**
+     * Approuver une demande d'accréditation
+     */
+    public function approve(Request $request, $id): JsonResponse
+    {
+        $accreditationRequest = AccreditationRequest::with('tourismActor')->findOrFail($id);
+        
+        if ($accreditationRequest->status !== 'pending') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cette demande n\'est plus en attente.'
+            ], 400);
+        }
+
+        $actor = $accreditationRequest->tourismActor;
+        
+        if (!$actor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Acteur associé introuvable.'
+            ], 404);
+        }
+
+        // Utiliser le contrôleur d'accréditation pour approuver
+        $accreditationController = new \App\Http\Controllers\Api\AccreditationController();
+        
+        // Si la demande a un numéro d'accréditation, l'utiliser
+        if ($actor->accreditation_number) {
+            $request->merge(['accreditation_number' => $actor->accreditation_number]);
+        }
+        
+        return $accreditationController->approve($request, $actor->id);
+    }
+
+    /**
+     * Rejeter une demande d'accréditation
+     */
+    public function reject(Request $request, $id): JsonResponse
+    {
+        $accreditationRequest = AccreditationRequest::with('tourismActor')->findOrFail($id);
+        
+        if ($accreditationRequest->status !== 'pending') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cette demande n\'est plus en attente.'
+            ], 400);
+        }
+
+        $actor = $accreditationRequest->tourismActor;
+        
+        if (!$actor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Acteur associé introuvable.'
+            ], 404);
+        }
+
+        // Utiliser le contrôleur d'accréditation pour rejeter
+        $accreditationController = new \App\Http\Controllers\Api\AccreditationController();
+        return $accreditationController->reject($request, $actor->id);
+    }
 }
