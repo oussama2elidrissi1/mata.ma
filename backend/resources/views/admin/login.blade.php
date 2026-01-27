@@ -51,7 +51,7 @@
                             id="email"
                             type="email"
                             required
-                            placeholder="admin@mata.ma"
+                            placeholder="admin@exemple.ma"
                             class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all text-gray-900 bg-white"
                         />
                     </div>
@@ -85,11 +85,7 @@
                 </button>
             </form>
 
-            <div class="mt-6 pt-6 border-t border-gray-200">
-                <p class="text-xs text-center text-gray-500">
-                    <span class="font-semibold">Identifiants par défaut :</span> admin@mata.ma / admin123
-                </p>
-            </div>
+            
         </div>
     </div>
 

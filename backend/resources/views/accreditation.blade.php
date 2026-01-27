@@ -6,10 +6,10 @@
     <section class="relative bg-gradient-to-br from-red-900 via-red-800 to-red-950 text-white py-20">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-serif tracking-tight drop-shadow-lg">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-serif tracking-tight drop-shadow-lg" data-i18n="accreditationSystemTitle">
                     Système d'Accréditation MATA
                 </h1>
-                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed" data-i18n="accreditationSystemSubtitle">
                     Un processus simple et transparent pour obtenir votre accréditation et rejoindre notre réseau de professionnels certifiés du tourisme marocain
                 </p>
             </div>
@@ -21,10 +21,10 @@
         <div class="container mx-auto px-4">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-serif tracking-tight">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-serif tracking-tight" data-i18n="accreditationProcessTitle">
                         Processus d'Accréditation
                     </h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto" data-i18n="accreditationProcessSubtitle">
                         Suivez ces étapes simples pour obtenir votre accréditation MATA
                     </p>
                 </div>
@@ -36,11 +36,11 @@
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                             </div>
                             <div class="flex-1">
-                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full">Étape 1</span>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2">Trouvez Votre Profil</h3>
+                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full" data-i18n="step1">Étape 1</span>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2" data-i18n="findProfile">Trouvez Votre Profil</h3>
                             </div>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed" data-i18n="findProfileDesc">
                             Recherchez votre établissement dans notre annuaire en ligne. Si votre profil existe déjà (ajouté par l'administration), vous pouvez directement demander l'accréditation.
                         </p>
                     </div>
@@ -51,11 +51,11 @@
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </div>
                             <div class="flex-1">
-                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full">Étape 2</span>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2">Demande d'Accréditation</h3>
+                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full" data-i18n="step2">Étape 2</span>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2" data-i18n="requestAccreditationStep">Demande d'Accréditation</h3>
                             </div>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed" data-i18n="requestAccreditationStepDesc">
                             Cliquez sur "Demander l'accréditation" sur votre page de profil. Remplissez le formulaire avec vos informations personnelles, votre pièce d'identité et téléchargez votre document d'accréditation.
                         </p>
                     </div>
@@ -66,11 +66,11 @@
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                             </div>
                             <div class="flex-1">
-                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full">Étape 3</span>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2">Confirmation de Réception</h3>
+                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full" data-i18n="step3">Étape 3</span>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2" data-i18n="confirmationStep">Confirmation de Réception</h3>
                             </div>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed" data-i18n="confirmationStepDesc">
                             Vous recevrez un email de confirmation confirmant que votre demande a bien été reçue et est en cours d'examen par notre équipe.
                         </p>
                     </div>
@@ -81,11 +81,11 @@
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                             </div>
                             <div class="flex-1">
-                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full">Étape 4</span>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2">Évaluation par l'Administration</h3>
+                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full" data-i18n="step4">Étape 4</span>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2" data-i18n="evaluationStep">Évaluation par l'Administration</h3>
                             </div>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed" data-i18n="evaluationStepDesc">
                             Notre équipe d'administration examine votre demande, vérifie vos documents et évalue votre établissement selon nos critères de qualité.
                         </p>
                     </div>
@@ -96,11 +96,11 @@
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                             </div>
                             <div class="flex-1">
-                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full">Étape 5</span>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2">Validation et Création de Compte</h3>
+                                <span class="text-sm font-bold text-red-900 bg-red-100 px-3 py-1 rounded-full" data-i18n="step5">Étape 5</span>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif mt-2" data-i18n="validationStep">Validation et Création de Compte</h3>
                             </div>
                         </div>
-                        <p class="text-gray-600 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed" data-i18n="validationStepDesc">
                             Si votre demande est approuvée, vous recevrez un email avec vos identifiants de connexion (email et mot de passe) pour accéder à votre espace personnel.
                         </p>
                     </div>
@@ -142,9 +142,9 @@
                         <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif">Pièce d'Identité</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            Carte d'identité nationale (CIN), passeport ou autre pièce d'identité officielle valide.
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif" data-i18n="identityInformation">Information d'identité</h3>
+                        <p class="text-gray-600 leading-relaxed" data-i18n="identityInformationDesc">
+                            Numero (CIN), passeport ou autre pièce d'identité officielle valide.
                         </p>
                     </div>
 
@@ -318,7 +318,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif tracking-tight">
-                    Prêt à Obtenir Votre Accréditation ?
+                    <span data-i18n="accreditationReady">Prêt à Obtenir Votre Accréditation ?</span>
                 </h2>
                 <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto leading-relaxed">
                     Rejoignez notre réseau de professionnels accrédités et bénéficiez de tous les avantages MATA pour développer votre activité touristique.

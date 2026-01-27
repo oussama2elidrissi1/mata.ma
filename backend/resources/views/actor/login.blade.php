@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Connexion Acteur - MATA</title>
+    <title>Connexion - MATA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -14,7 +14,7 @@
             <div class="inline-flex items-center justify-center gap-3 mb-4">
                 <span class="text-4xl font-bold text-red-500 tracking-tight">MATA</span>
             </div>
-            <h1 class="text-2xl font-bold text-white mb-1">Espace Acteur</h1>
+            <h1 class="text-2xl font-bold text-white mb-1">Espace Membre</h1>
             <p class="text-sm text-red-200">Connexion à votre compte</p>
         </div>
 
@@ -49,11 +49,17 @@
     </div>
 
     <script>
-        // Simple login logic (similar to admin-login.js)
+        // Login logic avec redirection automatique selon le rôle
         document.getElementById('login-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            
+            // Désactiver le bouton pendant la connexion
+            submitBtn.disabled = true;
+            submitText.textContent = 'Connexion...';
             
             try {
                 const res = await fetch('/api/auth/login', {
@@ -63,16 +69,33 @@
                 });
                 const data = await res.json();
                 
-                if (data.success && data.data.user.role === 'actor') {
+                if (data.success && data.data.user) {
+                    const user = data.data.user;
                     localStorage.setItem('auth_token', data.data.token);
-                    localStorage.setItem('auth_user', JSON.stringify(data.data.user));
-                    window.location.href = '/actor/dashboard';
+                    localStorage.setItem('auth_user', JSON.stringify(user));
+                    
+                    // Rediriger selon le rôle
+                    switch(user.role) {
+                        case 'admin':
+                            window.location.href = '/admin/dashboard';
+                            break;
+                        case 'actor':
+                            window.location.href = '/actor/dashboard';
+                            break;
+                        case 'user':
+                            window.location.href = '/candidate/dashboard';
+                            break;
+                        default:
+                            throw new Error('Rôle non reconnu');
+                    }
                 } else {
-                    throw new Error('Accès réservé aux acteurs');
+                    throw new Error(data.message || 'Erreur de connexion');
                 }
             } catch (error) {
                 document.getElementById('error-message').classList.remove('hidden');
                 document.getElementById('error-text').textContent = error.message || 'Erreur de connexion';
+                submitBtn.disabled = false;
+                submitText.textContent = 'Se connecter';
             }
         });
         

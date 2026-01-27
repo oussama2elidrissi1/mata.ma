@@ -101,8 +101,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/partners" class="text-gray-300 hover:text-white transition-colors">
-                            Partenaires
+                        <a href="{{ route('ecosystem') }}" class="text-gray-300 hover:text-white transition-colors">
+                            Écosystème
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('jobs') }}" class="text-gray-300 hover:text-white transition-colors">
+                            Emploi
                         </a>
                     </li>
                 </ul>

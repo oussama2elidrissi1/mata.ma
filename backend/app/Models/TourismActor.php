@@ -116,6 +116,11 @@ class TourismActor extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function jobOffers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobOffer::class);
+    }
+
     /**
      * Accessor pour convertir le logo en URL complète
      * Utilise getOriginal() pour préserver la valeur originale lors de la sauvegarde

@@ -8,7 +8,7 @@
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- i18n Script (chargé en premier) -->
+    <!-- i18n Script (chargé en premier de manière synchrone) -->
     <script src="{{ asset('js/i18n.js') }}"></script>
     <script>
         tailwind.config = {

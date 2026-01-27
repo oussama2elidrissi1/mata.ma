@@ -119,8 +119,8 @@
                     </label>
                     <select id="accreditation-identity-type" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-900 text-gray-900 bg-white">
-                        <option value="cin">Carte d'Identité Nationale (CIN)</option>
-                        <option value="passport">Passeport</option>
+                        <option value="cin">num (CIN)</option>
+                        <option value="passport">num Passeport</option>
                         <option value="other">Autre</option>
                     </select>
                 </div>

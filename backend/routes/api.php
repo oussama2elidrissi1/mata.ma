@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\SettingController;
 // Routes d'authentification
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 });
@@ -109,4 +110,35 @@ Route::middleware('auth:sanctum')->prefix('settings')->group(function () {
     Route::put('/{key}', [SettingController::class, 'update']);
     Route::post('/bulk-update', [SettingController::class, 'bulkUpdate']);
     Route::post('/upload-logo', [SettingController::class, 'uploadLogo']);
+});
+
+// Routes publiques pour les offres d'emploi
+Route::prefix('job-offers')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Api\JobOfferController::class, 'index']);
+    Route::get('/{id}', [\App\Http\Controllers\Api\JobOfferController::class, 'show']);
+});
+
+// Routes protégées pour les offres d'emploi (acteurs)
+Route::middleware('auth:sanctum')->prefix('job-offers')->group(function () {
+    Route::post('/', [\App\Http\Controllers\Api\JobOfferController::class, 'store']);
+    Route::put('/{id}', [\App\Http\Controllers\Api\JobOfferController::class, 'update']);
+    Route::delete('/{id}', [\App\Http\Controllers\Api\JobOfferController::class, 'destroy']);
+    Route::get('/my/offers', [\App\Http\Controllers\Api\JobOfferController::class, 'myOffers']);
+});
+
+// Routes pour les CV (candidats)
+Route::middleware('auth:sanctum')->prefix('cv')->group(function () {
+    Route::get('/me', [\App\Http\Controllers\Api\CvController::class, 'me']);
+    Route::post('/', [\App\Http\Controllers\Api\CvController::class, 'store']);
+    Route::put('/status', [\App\Http\Controllers\Api\CvController::class, 'updateStatus']);
+    Route::delete('/', [\App\Http\Controllers\Api\CvController::class, 'destroy']);
+    Route::get('/{id}/download', [\App\Http\Controllers\Api\CvController::class, 'download']);
+});
+
+// Routes pour les candidatures
+Route::middleware('auth:sanctum')->prefix('job-applications')->group(function () {
+    Route::post('/', [\App\Http\Controllers\Api\JobApplicationController::class, 'store']);
+    Route::get('/my/applications', [\App\Http\Controllers\Api\JobApplicationController::class, 'myApplications']);
+    Route::get('/offer/{offerId}/applications', [\App\Http\Controllers\Api\JobApplicationController::class, 'offerApplications']);
+    Route::put('/{id}/status', [\App\Http\Controllers\Api\JobApplicationController::class, 'updateStatus']);
 });

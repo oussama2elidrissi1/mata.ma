@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -41,6 +42,18 @@ class SettingController extends Controller
                 'success' => false,
                 'message' => 'Setting not found'
             ], 404);
+        }
+
+        // Si c'est le logo, générer l'URL complète
+        if ($key === 'site_logo' && $setting->value_fr) {
+            $logoPath = $setting->value_fr;
+            $logoUrl = Storage::url($logoPath);
+            // Si l'URL ne commence pas par http, construire l'URL complète
+            if (!filter_var($logoUrl, FILTER_VALIDATE_URL)) {
+                $baseUrl = config('app.url', 'http://localhost:8000');
+                $logoUrl = rtrim($baseUrl, '/') . $logoUrl;
+            }
+            $setting->logo_url = $logoUrl;
         }
 
         return response()->json([
@@ -185,12 +198,20 @@ class SettingController extends Controller
             $setting->description = 'Logo du site';
             $setting->save();
 
+            // Générer l'URL complète du logo
+            $logoUrl = Storage::url($urlPath);
+            // Si l'URL ne commence pas par http, construire l'URL complète
+            if (!filter_var($logoUrl, FILTER_VALIDATE_URL)) {
+                $baseUrl = config('app.url', 'http://localhost:8000');
+                $logoUrl = rtrim($baseUrl, '/') . $logoUrl;
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Logo uploadé avec succès',
                 'data' => [
                     'path' => $urlPath,
-                    'url' => asset('storage/' . $urlPath)
+                    'url' => $logoUrl
                 ]
             ]);
         } catch (\Exception $e) {

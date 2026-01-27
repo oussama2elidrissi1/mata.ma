@@ -63,7 +63,14 @@ Route::prefix('association')->name('association.')->group(function () {
 
 // Public pages supplémentaires
 Route::view('/accreditation', 'accreditation')->name('accreditation');
-Route::view('/partners', 'partners')->name('partners');
+Route::view('/ecosystem', 'ecosystem')->name('ecosystem');
+Route::view('/jobs', 'jobs')->name('jobs');
+
+// Candidate routes
+Route::prefix('candidate')->name('candidate.')->group(function () {
+    Route::view('/login', 'candidate.login')->name('login');
+    Route::view('/dashboard', 'candidate.dashboard')->name('dashboard');
+});
 
 // Debug route (optional)
 Route::get('/test-api', function () {

@@ -24,6 +24,16 @@ class User extends Authenticatable
         return $this->hasOne(TourismActor::class);
     }
 
+    public function cv(): HasOne
+    {
+        return $this->hasOne(Cv::class);
+    }
+
+    public function jobApplications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
     protected $hidden = [
         'password',
         'remember_token',

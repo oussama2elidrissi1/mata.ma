@@ -4,10 +4,10 @@
 <div class="min-h-screen bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4" style="color: #333333;">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4" style="color: #333333;" data-i18n="joinPageTitle">
                 Adhérer à notre réseau
             </h1>
-            <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+            <p class="text-gray-600 text-lg max-w-3xl mx-auto" data-i18n="joinPageSubtitle">
                 Rejoignez notre communauté d'acteurs du tourisme et développez votre activité
             </p>
         </div>
@@ -15,7 +15,7 @@
         <!-- Sélection du type de compte -->
         <div class="mb-8">
             <div class="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
-                <h2 class="text-xl font-bold mb-4 text-center" style="color: #333333;">
+                <h2 class="text-xl font-bold mb-4 text-center" style="color: #333333;" data-i18n="accountType">
                     Type de compte
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -25,8 +25,8 @@
                         <svg class="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #CC0000;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
-                        <h3 class="font-semibold mb-2" style="color: #333333;">Acteur</h3>
-                        <p class="text-sm text-gray-600">
+                        <h3 class="font-semibold mb-2" style="color: #333333;" data-i18n="actorsAccount">Acteurs</h3>
+                        <p class="text-sm text-gray-600" data-i18n="actorsAccountDesc">
                             Pour les professionnels du tourisme (hôtels, restaurants, guides, etc.)
                         </p>
                     </button>
@@ -35,9 +35,9 @@
                         <svg class="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #CC0000;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
-                        <h3 class="font-semibold mb-2" style="color: #333333;">Association</h3>
-                        <p class="text-sm text-gray-600">
-                            Pour les associations régionales du tourisme
+                        <h3 class="font-semibold mb-2" style="color: #333333;" data-i18n="associationAccount">Representation professionnelle et acteurs publics</h3>
+                        <p class="text-sm text-gray-600" data-i18n="associationAccountDesc">
+                            Pour les Representation professionnelle et acteurs publics
                         </p>
                     </button>
                 </div>
@@ -93,7 +93,7 @@
                             </li>
                             <li id="doc-association" class="hidden flex items-start space-x-2">
                                 <svg class="w-5 h-5 text-green-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span>Statuts de l'association</span>
+                                <span>Statuts de l'établissement</span>
                             </li>
                         </ul>
                     </div>
@@ -297,7 +297,7 @@ function setAccountType(type) {
         categorySelect.required = false;
         docAssociation.classList.remove('hidden');
         formSubtitle.textContent = '(Association)';
-        establishmentLabel.textContent = "Nom de l'Association";
+        establishmentLabel.textContent = "Nom de l'établissement";
     }
 }
 

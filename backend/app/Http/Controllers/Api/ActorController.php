@@ -137,10 +137,21 @@ class ActorController extends Controller
         $logoPath = $request->file('logo')->store('actors/logos', 'public');
         $actor->update(['logo' => $logoPath]);
 
+        // Générer l'URL complète du logo
+        $logoUrl = Storage::url($logoPath);
+        // Si l'URL ne commence pas par http, construire l'URL complète
+        if (!filter_var($logoUrl, FILTER_VALIDATE_URL)) {
+            $baseUrl = config('app.url', 'http://localhost:8000');
+            $logoUrl = rtrim($baseUrl, '/') . $logoUrl;
+        }
+
+        // Recharger l'acteur pour obtenir l'URL complète via l'accessor
+        $actor->refresh();
+
         return response()->json([
             'success' => true,
             'data' => [
-                'logo' => Storage::url($logoPath)
+                'logo' => $actor->logo // Utiliser l'accessor qui génère l'URL complète
             ],
             'message' => 'Logo mis à jour avec succès'
         ]);
