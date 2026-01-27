@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative min-h-[600px] flex items-center overflow-hidden" id="hero-section">
+    <section class="relative min-h-[500px] sm:min-h-[550px] md:min-h-[600px] flex items-center overflow-hidden" id="hero-section">
         <!-- Fallback gradient -->
         <div class="absolute inset-0 z-0" style="background: linear-gradient(to bottom, #CC0000, #B30000, #990000);"></div>
         
@@ -18,26 +18,26 @@
             style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5));"
         ></div>
         
-        <div class="container mx-auto px-4 py-16 relative z-[2]">
+        <div class="container mx-auto px-3 sm:px-4 py-10 sm:py-12 md:py-16 relative z-[2]">
             <div class="max-w-6xl mx-auto">
                 <!-- Title Section -->
-                <div class="text-center mb-10">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 leading-tight px-4 drop-shadow-lg font-serif" data-i18n="heroTitle">
+                <div class="text-center mb-8 md:mb-10">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 md:mb-4 leading-snug md:leading-tight px-2 sm:px-4 drop-shadow-lg font-serif" data-i18n="heroTitle">
                         Annuaire des Acteurs du Tourisme Accrédités au Maroc
                     </h1>
-                    <p class="text-base md:text-lg lg:text-xl text-white/95 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-md font-normal" data-i18n="heroSubtitle">
+                    <p class="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 max-w-3xl mx-auto px-2 sm:px-4 leading-relaxed drop-shadow-md font-normal" data-i18n="heroSubtitle">
                         Développez votre visibilité et renforcez votre crédibilité commerciale au sein du réseau national des entreprises touristiques au Maroc.
                     </p>
                 </div>
 
                 <!-- Main Search Bar -->
-                <form id="hero-search-form" class="mb-4">
-                    <div class="bg-white rounded-2xl shadow-2xl p-5 md:p-6">
-                        <div class="flex flex-col md:flex-row gap-3 md:gap-4">
+                <form id="hero-search-form" class="mb-3 md:mb-4">
+                    <div class="bg-white rounded-xl md:rounded-2xl shadow-2xl p-3 sm:p-4 md:p-6">
+                        <div class="flex flex-col md:flex-row gap-2 sm:gap-3 md:gap-4">
                             <!-- Search Input -->
                             <div class="flex-1 relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                     </svg>
                                 </div>
@@ -45,16 +45,16 @@
                                     type="text"
                                     id="hero-search-input"
                                     data-i18n-placeholder="searchPlaceholder"
-                                    placeholder="Rechercher un professionnel, une entreprise..."
-                                    class="w-full pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 transition-all text-sm md:text-base placeholder-gray-400 text-gray-900 bg-white"
+                                    placeholder="Rechercher un professionnel..."
+                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 md:py-4 rounded-lg md:rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 transition-all text-sm md:text-base placeholder-gray-400 text-gray-900 bg-white"
                                     style="--tw-ring-color: #CC0000;"
                                 />
                             </div>
 
                             <!-- Location Input -->
                             <div class="md:w-64 relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
@@ -63,14 +63,14 @@
                                     type="text"
                                     id="hero-location-input"
                                     placeholder="Ville, région..."
-                                    class="w-full pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 transition-all text-sm md:text-base placeholder-gray-400 text-gray-900 bg-white"
+                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 md:py-4 rounded-lg md:rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 transition-all text-sm md:text-base placeholder-gray-400 text-gray-900 bg-white"
                                 />
                             </div>
 
                             <!-- Search Button -->
                             <button
                                 type="submit"
-                                class="px-6 md:px-8 py-3 md:py-4 text-white rounded-xl transition-colors font-semibold whitespace-nowrap text-sm md:text-base"
+                                class="px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-white rounded-lg md:rounded-xl transition-colors font-semibold whitespace-nowrap text-sm md:text-base"
                                 style="background-color: #CC0000;"
                                 data-i18n="searchButton"
                             >
@@ -81,10 +81,10 @@
                             <button
                                 type="button"
                                 id="hero-filters-toggle"
-                                class="px-5 md:px-6 py-3 md:py-4 rounded-xl transition-colors font-semibold flex items-center justify-center gap-2 whitespace-nowrap text-sm md:text-base"
+                                class="px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-4 rounded-lg md:rounded-xl transition-colors font-semibold flex items-center justify-center gap-2 whitespace-nowrap text-sm md:text-base"
                                 style="background-color: rgba(204, 0, 0, 0.1); color: #CC0000;"
                             >
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
                                 </svg>
                                 <span>Filtres</span>
@@ -94,11 +94,11 @@
                 </form>
 
                 <!-- Advanced Filters Section -->
-                <div id="hero-filters-panel" class="bg-white rounded-2xl shadow-2xl p-5 md:p-6 mb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div id="hero-filters-panel" class="bg-white rounded-xl md:rounded-2xl shadow-2xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-5 md:mb-6 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
-                            <select id="hero-filter-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Type</label>
+                            <select id="hero-filter-type" class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-sm sm:text-base">
                                 <option value="">Tous</option>
                                 <option value="hotel">Hebergements</option>
                                 <option value="restaurant">Restaurants</option>
@@ -107,8 +107,8 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Région</label>
-                            <select id="hero-filter-region" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">Région</label>
+                            <select id="hero-filter-region" class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-sm sm:text-base">
                                 <option value="">Toutes</option>
                                 <option value="Casablanca-Settat">Casablanca-Settat</option>
                                 <option value="Rabat-Salé-Kénitra">Rabat-Salé-Kénitra</option>
@@ -117,7 +117,7 @@
                             </select>
                         </div>
                         <div class="flex items-end">
-                            <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                            <label class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-700">
                                 <input id="hero-filter-accredited" type="checkbox" class="rounded border-gray-300">
                                 <span data-i18n="accreditedActorsOnly">Accrédités uniquement</span>
                             </label>
@@ -129,48 +129,48 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="bg-white py-16">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <section class="bg-white py-12 sm:py-14 md:py-16">
+        <div class="container mx-auto px-3 sm:px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                 <div class="text-center">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #CC0000;">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4" style="background-color: #CC0000;">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" style="color: #333333;">500+</div>
-                    <div class="font-medium" style="color: #333333;">Acteurs Accrédités</div>
+                    <div class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2" style="color: #333333;">500+</div>
+                    <div class="text-xs sm:text-sm md:text-base font-medium" style="color: #333333;">Acteurs Accrédités</div>
                 </div>
                 <div class="text-center">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #CC0000;">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4" style="background-color: #CC0000;">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" style="color: #333333;">15+</div>
-                    <div class="font-medium" style="color: #333333;">Années d'Excellence</div>
+                    <div class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2" style="color: #333333;">15+</div>
+                    <div class="text-xs sm:text-sm md:text-base font-medium" style="color: #333333;">Années d'Excellence</div>
                 </div>
                 <div class="text-center">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #CC0000;">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4" style="background-color: #CC0000;">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" style="color: #333333;">12</div>
-                    <div class="font-medium" style="color: #333333;">Régions Couvertes</div>
+                    <div class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2" style="color: #333333;">12</div>
+                    <div class="text-xs sm:text-sm md:text-base font-medium" style="color: #333333;">Régions Couvertes</div>
                 </div>
                 <div class="text-center">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #CC0000;">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4" style="background-color: #CC0000;">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <div class="text-4xl font-bold mb-2" style="color: #333333;">100%</div>
-                    <div class="font-medium" style="color: #333333;">Qualité Garantie</div>
+                    <div class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2" style="color: #333333;">100%</div>
+                    <div class="text-xs sm:text-sm md:text-base font-medium" style="color: #333333;">Qualité Garantie</div>
                 </div>
             </div>
-            <div class="text-center mt-12">
-                <p class="text-lg md:text-xl text-gray-600 font-medium" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; color: #4a5568;" data-i18n="mataServiceBusiness">
+            <div class="text-center mt-8 sm:mt-10 md:mt-12">
+                <p class="text-base sm:text-lg md:text-xl text-gray-600 font-medium px-3 sm:px-4" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; color: #4a5568;" data-i18n="mataServiceBusiness">
                     mata.ma au service de votre businesse
                 </p>
             </div>
@@ -178,25 +178,25 @@
     </section>
 
     <!-- Derniers Acteurs Accrédités Section -->
-    <section class="bg-white py-16">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 font-serif tracking-tight" style="color: #1a1a1a; font-family: Georgia, 'Times New Roman', serif; font-weight: 700;" data-i18n="latestAccreditedActors">
+    <section class="bg-white py-12 sm:py-14 md:py-16">
+        <div class="container mx-auto px-3 sm:px-4">
+            <div class="text-center mb-8 sm:mb-10 md:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 font-serif tracking-tight px-2" style="color: #1a1a1a; font-family: Georgia, 'Times New Roman', serif; font-weight: 700;" data-i18n="latestAccreditedActors">
                     Derniers Acteurs <span style="color: #CC0000;">Accrédités</span>
                 </h2>
-                <p class="text-lg md:text-xl text-center max-w-3xl mx-auto leading-relaxed" style="color: #4a5568; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-weight: 400;" data-i18n="latestAccreditedActorsSubtitle">
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl text-center max-w-3xl mx-auto leading-relaxed px-3 sm:px-4" style="color: #4a5568; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-weight: 400;" data-i18n="latestAccreditedActorsSubtitle">
                     Découvrez les professionnels du tourisme accrédités et certifiés par MATA.
                 </p>
             </div>
 
-            <div id="verified-actors" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div id="verified-actors" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
                 <div class="text-center text-gray-500 py-12" data-i18n="loadingAccreditedActors">Chargement des acteurs accrédités...</div>
             </div>
 
             <div class="text-center">
                 <a 
                     href="{{ route('actors.index') }}" 
-                    class="inline-block px-8 py-3 rounded-lg font-semibold transition-colors border-2"
+                    class="inline-block px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors border-2 text-sm sm:text-base"
                     style="background-color: white; color: #CC0000; border-color: #CC0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-weight: 600;"
                     data-i18n="viewAllActors"
                 >
@@ -207,20 +207,20 @@
     </section>
 
     <!-- Actualités & Annonces Officielles Section -->
-    <section class="bg-gray-50 py-16">
-        <div class="container mx-auto px-4">
+    <section class="bg-gray-50 py-12 sm:py-14 md:py-16">
+        <div class="container mx-auto px-3 sm:px-4">
             <!-- Section Header - Centered -->
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 font-serif tracking-tight" style="color: #1a1a1a; font-family: Georgia, 'Times New Roman', serif; font-weight: 700;" data-i18n="newsAndAnnouncements">
+            <div class="text-center mb-8 sm:mb-10 md:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 font-serif tracking-tight px-2" style="color: #1a1a1a; font-family: Georgia, 'Times New Roman', serif; font-weight: 700;" data-i18n="newsAndAnnouncements">
                     Actualités & Annonces Officielles
                 </h2>
-                <p class="text-lg md:text-xl text-center max-w-3xl mx-auto leading-relaxed" style="color: #4a5568; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-weight: 400;" data-i18n="newsAndAnnouncementsSubtitle">
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl text-center max-w-3xl mx-auto leading-relaxed px-3 sm:px-4" style="color: #4a5568; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-weight: 400;" data-i18n="newsAndAnnouncementsSubtitle">
                     Suivez les dernières informations, annonces et mises à jour du réseau MATA.
                 </p>
             </div>
 
             <!-- News Cards - Centered -->
-            <div id="news-cards" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div id="news-cards" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                 <div class="text-center text-gray-500 py-12" data-i18n="loadingNews">Chargement des actualités...</div>
             </div>
         </div>

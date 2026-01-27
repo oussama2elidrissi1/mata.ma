@@ -1,8 +1,8 @@
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-4">
+    <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
         <div class="flex items-center justify-between">
-            <a href="{{ route('home') }}" class="flex items-center gap-4">
-                <div class="relative h-16 w-auto">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-4">
+                <div class="relative h-12 sm:h-14 md:h-16 w-auto">
                     @php
                         $logoSetting = \App\Models\Setting::where('key', 'site_logo')->first();
                         $logoPath = $logoSetting && $logoSetting->value_fr ? asset('storage/' . $logoSetting->value_fr) : asset('images/Logo.png');
@@ -11,7 +11,7 @@
                         src="{{ $logoPath }}" 
                         alt="MATA Logo"
                         class="object-contain h-full w-auto"
-                        style="max-width: 200px;"
+                        style="max-width: 120px; sm:max-width: 150px; md:max-width: 200px;"
                         id="header-logo"
                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 80%22%3E%3Ctext x=%2210%22 y=%2245%22 font-size=%2236%22 font-weight=%22900%22 fill=%22%23CC0000%22%3EMATA%3C/text%3E%3C/svg%3E'"
                     />
@@ -66,19 +66,19 @@
                 </a>
             </nav>
 
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4">
                 <!-- Bouton Menu Mobile -->
                 <button 
                     id="mobile-menu-btn"
-                    class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors"
+                    class="lg:hidden flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg hover:bg-gray-100 transition-colors"
                     style="color: #333333;"
                     onclick="toggleMobileMenu()"
                     aria-label="Menu"
                 >
-                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="menu-icon" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
-                    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="close-icon" class="w-5 h-5 sm:w-6 sm:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
@@ -86,15 +86,15 @@
                 <div class="relative" id="language-selector">
                     <button 
                         id="lang-btn"
-                        class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors bg-white"
+                        class="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg transition-colors bg-white text-xs sm:text-sm md:text-base"
                         style="color: #333333; border: 1px solid #CC0000;"
                         onclick="toggleLanguageMenu(event); return false;"
                     >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>
                         </svg>
                         <span id="current-lang" class="font-semibold">FR</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
@@ -120,11 +120,11 @@
                 <!-- Login Button -->
                 <a 
                     href="{{ route('actor.login') }}" 
-                    class="px-6 py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90"
+                    class="px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90 text-xs sm:text-sm md:text-base whitespace-nowrap"
                     style="background-color: #CC0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
                     data-i18n="login"
                 >
-                    login
+                    Se connecter
                 </a>
             </div>
         </div>
