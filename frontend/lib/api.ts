@@ -276,4 +276,66 @@ export const deleteNews = async (id: number): Promise<void> => {
   }
 }
 
+// Settings API functions
+export interface Setting {
+  id: number
+  key: string
+  value_fr: string | null
+  value_en: string | null
+  value_ar: string | null
+  type: string
+  group: string
+  description: string | null
+  logo_url?: string
+}
+
+export const getSetting = async (key: string): Promise<Setting> => {
+  try {
+    const response = await api.get<ApiResponse<Setting>>(`/settings/${key}`)
+    if (response.data.success && response.data.data) {
+      return response.data.data
+    }
+    throw new Error(response.data.message || 'Setting not found')
+  } catch (error: any) {
+    console.error('Error fetching setting:', error)
+    if (error.response?.status === 404) {
+      throw new Error('Setting not found')
+    }
+    throw error
+  }
+}
+
+export const getSiteLogo = async (): Promise<string | null> => {
+  try {
+    const setting = await getSetting('site_logo')
+    // Utiliser logo_url si disponible, sinon construire l'URL depuis value_fr
+    if (setting.logo_url) {
+      return setting.logo_url
+    }
+    if (setting.value_fr) {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000'
+      return `${baseUrl}/storage/${setting.value_fr}`
+    }
+    return null
+  } catch (error) {
+    console.error('Error fetching site logo:', error)
+    return null
+  }
+}
+
+export const uploadLogo = async (logoFile: File): Promise<{ path: string; url: string }> => {
+  try {
+    const formData = new FormData()
+    formData.append('logo', logoFile)
+    const response = await api.post<ApiResponse<{ path: string; url: string }>>('/settings/upload-logo', formData)
+    if (response.data.success && response.data.data) {
+      return response.data.data
+    }
+    throw new Error(response.data.message || 'Error uploading logo')
+  } catch (error: any) {
+    console.error('Error uploading logo:', error)
+    throw error
+  }
+}
+
 export default api

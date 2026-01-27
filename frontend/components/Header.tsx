@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from '@/lib/i18n'
 import { getCurrentUser, isAuthenticated } from '@/lib/auth'
 import { useState, useEffect } from 'react'
-import api from '@/lib/api'
+import api, { getSiteLogo } from '@/lib/api'
 import LanguageSelector from './LanguageSelector'
 
 export default function Header() {
@@ -17,6 +17,7 @@ export default function Header() {
   const [user, setUser] = useState<ReturnType<typeof getCurrentUser>>(null)
   const [isAssociation, setIsAssociation] = useState(false)
   const [authed, setAuthed] = useState(false)
+  const [logoUrl, setLogoUrl] = useState<string>('/images/Logo.png')
   
   useEffect(() => {
     setMounted(true)
@@ -57,6 +58,23 @@ export default function Header() {
     run()
   }, [mounted, authed, user])
 
+  // Récupérer le logo depuis l'API
+  useEffect(() => {
+    if (!mounted) return
+    const fetchLogo = async () => {
+      try {
+        const logo = await getSiteLogo()
+        if (logo) {
+          setLogoUrl(logo)
+        }
+      } catch (error) {
+        console.error('Error loading logo:', error)
+        // Garder le logo par défaut en cas d'erreur
+      }
+    }
+    fetchLogo()
+  }, [mounted])
+
   const isAdmin = user?.role === 'admin'
 
   return (
@@ -66,14 +84,17 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-4">
             <div className="flex items-center gap-4">
               <div className="relative h-16 w-auto">
-                <Image
-                  src="/images/Logo.png"
+                <img
+                  src={logoUrl}
                   alt="MATA Logo"
-                  width={200}
-                  height={80}
                   className="object-contain h-full w-auto"
-                  priority
-                  unoptimized
+                  style={{ maxWidth: '200px' }}
+                  onError={(e) => {
+                    // Fallback vers le logo par défaut si l'image ne charge pas
+                    if (e.currentTarget.src !== '/images/Logo.png') {
+                      e.currentTarget.src = '/images/Logo.png'
+                    }
+                  }}
                 />
               </div>
             </div>
