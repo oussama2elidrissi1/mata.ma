@@ -628,7 +628,7 @@
                         window.location.href = '/actor/dashboard';
                         break;
                     case 'admin':
-                        window.location.href = '/admin/dashboard';
+                        window.location.href = '/admin';
                         break;
                     default:
                         window.location.href = '/';
