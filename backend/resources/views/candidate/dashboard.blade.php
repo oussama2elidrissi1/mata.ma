@@ -1,6 +1,59 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .tab-button, .job-subtab-button {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .tab-button:focus, .job-subtab-button:focus {
+        outline: none;
+    }
+    
+    .tab-content, .job-subcontent {
+        animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Sidebar fixe avec hauteur maximale et scroll */
+    .sticky {
+        position: -webkit-sticky;
+        position: sticky;
+        max-height: calc(100vh - 8rem);
+        overflow-y: auto;
+    }
+    
+    /* Personnalisation de la scrollbar */
+    .sticky::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .sticky::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .sticky::-webkit-scrollbar-thumb {
+        background: #CC0000;
+        border-radius: 10px;
+    }
+    
+    .sticky::-webkit-scrollbar-thumb:hover {
+        background: #990000;
+    }
+</style>
+
 <div class="min-h-screen bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 py-8">
         <div class="mb-8 flex justify-between items-center">
@@ -17,134 +70,274 @@
             </button>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Sidebar - CV Section -->
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-                    <h2 class="text-xl font-bold mb-4" style="color: #1a1a1a;" data-i18n="myCV">Mon CV</h2>
-                    
-                    <div id="cv-status" class="mb-4">
-                        <div class="text-center py-8">
-                            <p class="text-gray-500 mb-4" data-i18n="noCV">Aucun CV enregistré</p>
-                            <div class="space-y-3">
+        <!-- Tabs Navigation -->
+        <div class="mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8">
+                    <button 
+                        onclick="switchTab('personal')"
+                        id="tab-personal"
+                        class="tab-button py-4 px-1 border-b-2 font-medium text-sm transition-colors"
+                        data-i18n="personalInfo"
+                    >
+                        Mes informations personnelles
+                    </button>
+                    <button 
+                        onclick="switchTab('jobs')"
+                        id="tab-jobs"
+                        class="tab-button py-4 px-1 border-b-2 font-medium text-sm transition-colors"
+                        data-i18n="jobOffers"
+                    >
+                        Offres d'emploi
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Personal Info Tab Content -->
+        <div id="content-personal" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Sidebar fixe à gauche -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+                        <h2 class="text-xl font-bold mb-4" style="color: #1a1a1a;" data-i18n="myCV">Mon CV</h2>
+                        
+                        <div id="cv-status" class="mb-4">
+                            <div class="text-center py-8">
+                                <p class="text-gray-500 mb-4" data-i18n="noCV">Aucun CV enregistré</p>
+                                <div class="space-y-3">
+                                    <button 
+                                        onclick="openCVModal()"
+                                        class="w-full px-6 py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90"
+                                        style="background-color: #CC0000;"
+                                        data-i18n="createCV"
+                                    >
+                                        Créer mon CV
+                                    </button>
+                                    <button 
+                                        onclick="openQuickUploadModal()"
+                                        class="w-full px-6 py-2 rounded-lg border-2 font-semibold transition-colors hover:bg-gray-50"
+                                        style="border-color: #CC0000; color: #CC0000;"
+                                        data-i18n="uploadCVPDF"
+                                    >
+                                        📄 Déposer mon CV PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="cv-content" class="hidden">
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-600 mb-2" data-i18n="cvStatus">Statut:</p>
+                                <span id="cv-status-badge" class="inline-block px-3 py-1 rounded-full text-sm font-semibold"></span>
+                            </div>
+                            <div class="mb-4 p-3 bg-gray-50 rounded-lg">
+                                <p class="text-sm font-semibold mb-1" style="color: #1a1a1a;" id="cv-name-display"></p>
+                                <p class="text-xs text-gray-600" id="cv-email-display"></p>
+                            </div>
+                            <button 
+                                onclick="openCVModal()"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors mb-2"
+                                data-i18n="editCV"
+                            >
+                                Modifier mon CV
+                            </button>
+                            <button 
+                                onclick="toggleCVStatus()"
+                                id="toggle-status-btn"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors mb-2"
+                            >
+                                <span id="toggle-status-text"></span>
+                            </button>
+                            <div class="mb-2">
+                                <p class="text-xs text-gray-500 mb-1" data-i18n="cvFileInfo">Fichier CV:</p>
+                                <div id="cv-file-info" class="text-sm text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span id="cv-file-name" class="truncate"></span>
+                                </div>
+                            </div>
+                            <button 
+                                onclick="downloadCV()"
+                                id="download-cv-btn"
+                                class="w-full px-4 py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90 mb-2"
+                                style="background-color: #CC0000;"
+                                data-i18n="downloadCV"
+                            >
+                                Télécharger mon CV
+                            </button>
+                            <button 
+                                onclick="openQuickUploadModal()"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors mb-2"
+                                data-i18n="replaceCV"
+                            >
+                                Remplacer le fichier CV
+                            </button>
+                            <button 
+                                onclick="deleteCV()"
+                                class="w-full px-4 py-2 border border-red-300 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                                data-i18n="deleteCV"
+                            >
+                                Supprimer mon CV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenu principal à droite -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-6" style="color: #1a1a1a;">
+                            <span data-i18n="cvDetails">Détails du CV</span>
+                        </h2>
+                        <div class="text-center py-12 text-gray-500">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <p data-i18n="cvDetailsMessage">Créez ou téléchargez votre CV pour voir les détails ici</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jobs Tab Content -->
+        <div id="content-jobs" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Sidebar fixe à gauche avec statistiques -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+                        <h2 class="text-xl font-bold mb-4" style="color: #1a1a1a;" data-i18n="jobStats">Statistiques</h2>
+                        
+                        <div class="space-y-4">
+                            <!-- Statistiques CV -->
+                            <div class="p-4 bg-gradient-to-r from-red-50 to-red-100 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600" data-i18n="cvStatus">Statut CV</span>
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-2xl font-bold" style="color: #CC0000;" id="sidebar-cv-status">-</p>
+                            </div>
+
+                            <!-- Statistiques candidatures -->
+                            <div class="p-4 bg-blue-50 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600" data-i18n="totalApplications">Total candidatures</span>
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                    </svg>
+                                </div>
+                                <p class="text-2xl font-bold text-blue-600" id="total-applications">0</p>
+                            </div>
+
+                            <!-- Candidatures en attente -->
+                            <div class="p-4 bg-yellow-50 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600" data-i18n="pendingApplications">En attente</span>
+                                    <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-2xl font-bold text-yellow-600" id="pending-applications">0</p>
+                            </div>
+
+                            <!-- Candidatures acceptées -->
+                            <div class="p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-600" data-i18n="acceptedApplications">Acceptées</span>
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-2xl font-bold text-green-600" id="accepted-applications">0</p>
+                            </div>
+                        </div>
+
+                        <!-- Bouton rapide -->
+                        <div class="mt-6">
+                            <button 
+                                onclick="switchTab('personal')"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                                data-i18n="goToCV"
+                            >
+                                Aller à mon CV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenu principal à droite avec sous-onglets -->
+                <div class="lg:col-span-2">
+                    <!-- Sub-tabs Navigation -->
+                    <div class="mb-6">
+                        <div class="border-b border-gray-200">
+                            <nav class="-mb-px flex space-x-8">
                                 <button 
-                                    onclick="openCVModal()"
-                                    class="w-full px-6 py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90"
-                                    style="background-color: #CC0000;"
-                                    data-i18n="createCV"
+                                    onclick="switchJobSubTab('offers')"
+                                    id="subtab-offers"
+                                    class="job-subtab-button py-3 px-1 border-b-2 font-medium text-sm transition-colors"
+                                    data-i18n="jobOffers"
                                 >
-                                    Créer mon CV
+                                    Offres d'emploi
                                 </button>
                                 <button 
-                                    onclick="openQuickUploadModal()"
-                                    class="w-full px-6 py-2 rounded-lg border-2 font-semibold transition-colors hover:bg-gray-50"
-                                    style="border-color: #CC0000; color: #CC0000;"
-                                    data-i18n="uploadCVPDF"
+                                    onclick="switchJobSubTab('applications')"
+                                    id="subtab-applications"
+                                    class="job-subtab-button py-3 px-1 border-b-2 font-medium text-sm transition-colors"
+                                    data-i18n="myApplications"
                                 >
-                                    📄 Déposer mon CV PDF
+                                    Mes Candidatures
                                 </button>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Job Offers Sub-content -->
+                    <div id="subcontent-offers" class="job-subcontent">
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-bold" style="color: #1a1a1a;" data-i18n="jobOffers">Offres d'emploi</h2>
+                                <div class="flex gap-2">
+                                    <select id="filter-category" class="px-4 py-2 border border-gray-300 rounded-lg text-sm" onchange="loadJobOffers()">
+                                        <option value="">Toutes les catégories</option>
+                                        <option value="Hôtellerie & Restauration">Hôtellerie & Restauration</option>
+                                        <option value="Agences de Voyage">Agences de Voyage</option>
+                                        <option value="Guide Touristique">Guide Touristique</option>
+                                        <option value="Événementiel & Animation">Événementiel & Animation</option>
+                                        <option value="Marketing & Communication">Marketing & Communication</option>
+                                        <option value="Formation & Management">Formation & Management</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="job-offers-list" class="space-y-4">
+                                <div class="text-center py-12 text-gray-500" data-i18n="loading">Chargement...</div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="cv-content" class="hidden">
-                        <div class="mb-4">
-                            <p class="text-sm text-gray-600 mb-2" data-i18n="cvStatus">Statut:</p>
-                            <span id="cv-status-badge" class="inline-block px-3 py-1 rounded-full text-sm font-semibold"></span>
-                        </div>
-                        <div class="mb-4 p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm font-semibold mb-1" style="color: #1a1a1a;" id="cv-name-display"></p>
-                            <p class="text-xs text-gray-600" id="cv-email-display"></p>
-                        </div>
-                        <button 
-                            onclick="openCVModal()"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors mb-2"
-                            data-i18n="editCV"
-                        >
-                            Modifier mon CV
-                        </button>
-                        <button 
-                            onclick="toggleCVStatus()"
-                            id="toggle-status-btn"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors mb-2"
-                        >
-                            <span id="toggle-status-text"></span>
-                        </button>
-                        <div class="mb-2">
-                            <p class="text-xs text-gray-500 mb-1" data-i18n="cvFileInfo">Fichier CV:</p>
-                            <div id="cv-file-info" class="text-sm text-gray-700 flex items-center gap-2">
-                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                                </svg>
-                                <span id="cv-file-name" class="truncate"></span>
+                    <!-- My Applications Sub-content -->
+                    <div id="subcontent-applications" class="job-subcontent hidden">
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-bold" style="color: #1a1a1a;" data-i18n="myApplications">Mes Candidatures</h2>
+                                <select id="filter-applications" class="px-4 py-2 border border-gray-300 rounded-lg text-sm" onchange="loadMyApplications()">
+                                    <option value="">Tous les statuts</option>
+                                    <option value="pending">En attente</option>
+                                    <option value="reviewed">Examiné</option>
+                                    <option value="accepted">Accepté</option>
+                                    <option value="rejected">Rejeté</option>
+                                </select>
+                            </div>
+                            <div id="my-applications-list" class="space-y-4">
+                                <div class="text-center py-12 text-gray-500" data-i18n="loading">Chargement...</div>
                             </div>
                         </div>
-                        <button 
-                            onclick="downloadCV()"
-                            id="download-cv-btn"
-                            class="w-full px-4 py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90 mb-2"
-                            style="background-color: #CC0000;"
-                            data-i18n="downloadCV"
-                        >
-                            Télécharger mon CV
-                        </button>
-                        <button 
-                            onclick="openQuickUploadModal()"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors mb-2"
-                            data-i18n="replaceCV"
-                        >
-                            Remplacer le fichier CV
-                        </button>
-                        <button 
-                            onclick="deleteCV()"
-                            class="w-full px-4 py-2 border border-red-300 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
-                            data-i18n="deleteCV"
-                        >
-                            Supprimer mon CV
-                        </button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Main Content - Job Offers -->
-            <div class="lg:col-span-2">
-                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold" style="color: #1a1a1a;" data-i18n="jobOffers">Offres d'emploi</h2>
-                        <div class="flex gap-2">
-                            <select id="filter-category" class="px-4 py-2 border border-gray-300 rounded-lg text-sm" onchange="loadJobOffers()">
-                                <option value="">Toutes les catégories</option>
-                                <option value="Hôtellerie & Restauration">Hôtellerie & Restauration</option>
-                                <option value="Agences de Voyage">Agences de Voyage</option>
-                                <option value="Guide Touristique">Guide Touristique</option>
-                                <option value="Événementiel & Animation">Événementiel & Animation</option>
-                                <option value="Marketing & Communication">Marketing & Communication</option>
-                                <option value="Formation & Management">Formation & Management</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="job-offers-list" class="space-y-4">
-                        <div class="text-center py-12 text-gray-500" data-i18n="loading">Chargement...</div>
-                    </div>
-                </div>
-
-            <!-- My Applications -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold" style="color: #1a1a1a;" data-i18n="myApplications">Mes Candidatures</h2>
-                    <select id="filter-applications" class="px-4 py-2 border border-gray-300 rounded-lg text-sm" onchange="loadMyApplications()">
-                        <option value="">Tous les statuts</option>
-                        <option value="pending">En attente</option>
-                        <option value="reviewed">Examiné</option>
-                        <option value="accepted">Accepté</option>
-                        <option value="rejected">Rejeté</option>
-                    </select>
-                </div>
-                <div id="my-applications-list" class="space-y-4">
-                    <div class="text-center py-12 text-gray-500" data-i18n="loading">Chargement...</div>
-                </div>
-            </div>
             </div>
         </div>
     </div>
@@ -266,24 +459,93 @@
 
 <script>
     let currentCV = null;
+    let currentTab = 'personal'; // Tab actif par défaut
+    let currentJobSubTab = 'offers'; // Sous-onglet actif par défaut dans Jobs
+
+    // Fonction pour changer d'onglet
+    function switchTab(tabName) {
+        // Cacher tous les contenus
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.add('hidden');
+        });
+        
+        // Réinitialiser tous les boutons d'onglets
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('border-red-600', 'text-red-600');
+            button.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+        });
+        
+        // Afficher le contenu sélectionné
+        document.getElementById('content-' + tabName).classList.remove('hidden');
+        
+        // Activer le bouton d'onglet sélectionné
+        const activeButton = document.getElementById('tab-' + tabName);
+        activeButton.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+        activeButton.classList.add('border-red-600', 'text-red-600');
+        
+        currentTab = tabName;
+        
+        // Charger les données selon l'onglet actif
+        if (tabName === 'jobs' && checkAuth()) {
+            switchJobSubTab('offers'); // Activer le premier sous-onglet par défaut
+            updateSidebarStats();
+            loadJobOffers();
+            loadMyApplications();
+        }
+    }
+
+    // Fonction pour changer de sous-onglet dans Jobs
+    function switchJobSubTab(subTabName) {
+        // Cacher tous les sous-contenus
+        document.querySelectorAll('.job-subcontent').forEach(content => {
+            content.classList.add('hidden');
+        });
+        
+        // Réinitialiser tous les boutons de sous-onglets
+        document.querySelectorAll('.job-subtab-button').forEach(button => {
+            button.classList.remove('border-red-600', 'text-red-600');
+            button.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+        });
+        
+        // Afficher le sous-contenu sélectionné
+        document.getElementById('subcontent-' + subTabName).classList.remove('hidden');
+        
+        // Activer le bouton de sous-onglet sélectionné
+        const activeButton = document.getElementById('subtab-' + subTabName);
+        activeButton.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+        activeButton.classList.add('border-red-600', 'text-red-600');
+        
+        currentJobSubTab = subTabName;
+    }
+
+    // Fonction pour mettre à jour les statistiques de la sidebar
+    function updateSidebarStats() {
+        // Mettre à jour le statut du CV
+        const cvStatusElement = document.getElementById('sidebar-cv-status');
+        if (currentCV) {
+            cvStatusElement.textContent = currentCV.status === 'published' ? 'Publié' : 'Brouillon';
+        } else {
+            cvStatusElement.textContent = 'Aucun CV';
+        }
+    }
 
     function checkAuth() {
         const token = localStorage.getItem('auth_token');
         const userStr = localStorage.getItem('auth_user');
         
         if (!token || !userStr) {
-            window.location.href = '{{ route("jobs") }}';
+            window.location.href = '/actor/login';
             return false;
         }
         
         try {
             const user = JSON.parse(userStr);
             if (user.role !== 'user') {
-                window.location.href = '{{ route("jobs") }}';
+                window.location.href = '/actor/login';
                 return false;
             }
         } catch (e) {
-            window.location.href = '{{ route("jobs") }}';
+            window.location.href = '/actor/login';
             return false;
         }
         
@@ -357,6 +619,9 @@
             downloadBtn.disabled = false;
             downloadBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         }
+        
+        // Mettre à jour les statistiques de la sidebar
+        updateSidebarStats();
     }
 
     async function loadJobOffers() {
@@ -433,6 +698,20 @@
             if (data.success && data.data && data.data.length > 0) {
                 let applications = data.data;
                 
+                // Calculer les statistiques (avant le filtrage)
+                const stats = {
+                    total: applications.length,
+                    pending: applications.filter(app => app.status === 'pending').length,
+                    reviewed: applications.filter(app => app.status === 'reviewed').length,
+                    accepted: applications.filter(app => app.status === 'accepted').length,
+                    rejected: applications.filter(app => app.status === 'rejected').length
+                };
+                
+                // Mettre à jour les statistiques dans la sidebar
+                document.getElementById('total-applications').textContent = stats.total;
+                document.getElementById('pending-applications').textContent = stats.pending;
+                document.getElementById('accepted-applications').textContent = stats.accepted;
+                
                 // Filtrer par statut si un filtre est sélectionné
                 if (statusFilter) {
                     applications = applications.filter(app => app.status === statusFilter);
@@ -482,6 +761,11 @@
                     container.innerHTML = '<div class="text-center py-12 text-gray-500">Aucune candidature avec ce statut</div>';
                 }
             } else {
+                // Pas de candidatures, mettre les stats à 0
+                document.getElementById('total-applications').textContent = '0';
+                document.getElementById('pending-applications').textContent = '0';
+                document.getElementById('accepted-applications').textContent = '0';
+                
                 container.innerHTML = '<div class="text-center py-12 text-gray-500">Aucune candidature</div>';
             }
         } catch (error) {
@@ -713,6 +997,7 @@
                 currentCV = null;
                 document.getElementById('cv-status').classList.remove('hidden');
                 document.getElementById('cv-content').classList.add('hidden');
+                updateSidebarStats(); // Mettre à jour les stats après suppression
                 alert('CV supprimé avec succès');
             } else {
                 alert(data.message || 'Erreur lors de la suppression');
@@ -777,18 +1062,17 @@
         } finally {
             localStorage.removeItem('auth_token');
             localStorage.removeItem('auth_user');
-            window.location.href = '{{ route("jobs") }}';
+            window.location.href = '/actor/login';
         }
     }
 
     // Initialisation
     if (checkAuth()) {
         loadCV();
-        loadJobOffers();
-        loadMyApplications();
+        switchTab('personal'); // Activer l'onglet personnel par défaut
     } else {
-        // Rediriger vers la page jobs si non authentifié
-        window.location.href = '{{ route("jobs") }}';
+        // Rediriger vers la page de login si non authentifié
+        window.location.href = '/actor/login';
     }
 
     // Gestion de l'upload de fichier

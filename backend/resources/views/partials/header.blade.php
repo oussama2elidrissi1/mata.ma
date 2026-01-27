@@ -1,6 +1,6 @@
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
-        <div class="flex items-center justify-between">
+    <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4 overflow-visible">
+        <div class="flex items-center justify-between overflow-visible">
             <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-4">
                 <div class="relative h-14 sm:h-16 md:h-20 lg:h-24 w-auto">
                     @php
@@ -66,7 +66,7 @@
                 </a>
             </nav>
 
-            <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4">
+            <div class="flex items-center gap-1.5 sm:gap-2 md:gap-4 overflow-visible">
                 <!-- Bouton Menu Mobile -->
                 <button 
                     id="mobile-menu-btn"
@@ -83,7 +83,7 @@
                     </svg>
                 </button>
                 <!-- Language Selector -->
-                <div class="relative" id="language-selector">
+                <div class="relative overflow-visible" id="language-selector">
                     <button 
                         id="lang-btn"
                         class="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg transition-colors bg-white text-xs sm:text-sm md:text-base"
@@ -98,7 +98,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
-                    <div id="lang-menu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                    <div id="lang-menu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-[100]">
                         <button type="button" onclick="changeLanguage('fr', event); return false;" class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 language-option" data-lang="fr">
                             <span class="font-semibold">🇫🇷</span>
                             <span>Français</span>
@@ -117,15 +117,66 @@
                     </div>
                 </div>
                 
-                <!-- Login Button -->
-                <a 
-                    href="{{ route('actor.login') }}" 
-                    class="px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90 text-xs sm:text-sm md:text-base whitespace-nowrap"
-                    style="background-color: #CC0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
-                    data-i18n="login"
-                >
-                    Se connecter
-                </a>
+                <!-- User Menu / Login Button -->
+                <div id="auth-section" class="overflow-visible">
+                    <!-- Login Button (shown when not logged in) -->
+                    <a 
+                        id="login-btn"
+                        href="{{ route('actor.login') }}" 
+                        class="px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-lg text-white font-semibold transition-colors hover:opacity-90 text-xs sm:text-sm md:text-base whitespace-nowrap"
+                        style="background-color: #CC0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
+                        data-i18n="login"
+                    >
+                        Se connecter
+                    </a>
+
+                    <!-- User Menu (shown when logged in) -->
+                    <div id="user-menu-container" class="hidden relative overflow-visible">
+                        <button 
+                            id="user-menu-btn"
+                            onclick="toggleUserMenu()"
+                            class="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors text-xs sm:text-sm md:text-base"
+                            style="color: #333333;"
+                        >
+                            <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white font-semibold text-xs sm:text-sm" style="background-color: #CC0000;">
+                                <span id="user-initials"></span>
+                            </div>
+                            <span id="user-name-display" class="font-semibold hidden sm:inline"></span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-[100]">
+                            <div class="px-4 py-2 border-b border-gray-200">
+                                <p class="text-xs text-gray-500" data-i18n="connectedAs">Connecté en tant que</p>
+                                <p id="user-email-display" class="text-sm font-semibold truncate" style="color: #333333;"></p>
+                                <p id="user-role-display" class="text-xs text-gray-500"></p>
+                            </div>
+                            <button 
+                                id="dashboard-link"
+                                onclick="goToDashboard()"
+                                class="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 text-sm"
+                                style="color: #333333;"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                <span data-i18n="myDashboard">Mon espace</span>
+                            </button>
+                            <button 
+                                onclick="handleLogout()"
+                                class="w-full text-left px-4 py-2 hover:bg-red-50 flex items-center gap-2 text-sm text-red-600"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                <span data-i18n="logout">Déconnexion</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -213,15 +264,46 @@
                 >
                     Contacter
                 </a>
+                <!-- Login Button Mobile (shown when not logged in) -->
                 <a 
+                    id="mobile-login-btn"
                     href="{{ route('actor.login') }}" 
                     class="px-4 py-3 rounded-lg text-white font-semibold transition-colors hover:opacity-90 text-center mt-2"
                     style="background-color: #CC0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
                     data-i18n="login"
                     onclick="closeMobileMenu()"
                 >
-                    login
+                    Se connecter
                 </a>
+
+                <!-- User Menu Mobile (shown when logged in) -->
+                <div id="mobile-user-menu" class="hidden mt-2 border-t border-gray-200 pt-2">
+                    <div class="px-4 py-3 bg-gray-50 rounded-lg mb-2">
+                        <p class="text-xs text-gray-500" data-i18n="connectedAs">Connecté en tant que</p>
+                        <p id="mobile-user-name" class="text-sm font-semibold" style="color: #333333;"></p>
+                        <p id="mobile-user-email" class="text-xs text-gray-500 truncate"></p>
+                        <p id="mobile-user-role" class="text-xs text-gray-500"></p>
+                    </div>
+                    <button 
+                        onclick="goToDashboard(); closeMobileMenu();"
+                        class="w-full px-4 py-3 rounded-lg hover:bg-gray-100 flex items-center gap-2 text-sm"
+                        style="color: #333333;"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span data-i18n="myDashboard">Mon espace</span>
+                    </button>
+                    <button 
+                        onclick="handleLogout()"
+                        class="w-full px-4 py-3 rounded-lg hover:bg-red-50 flex items-center gap-2 text-sm text-red-600"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                        <span data-i18n="logout">Déconnexion</span>
+                    </button>
+                </div>
             </nav>
         </div>
     </div>
@@ -411,14 +493,230 @@
 
     // Initialiser au chargement du DOM
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLanguageDisplay);
+        document.addEventListener('DOMContentLoaded', () => {
+            initLanguageDisplay();
+            checkAuthStatus();
+        });
     } else {
         // Attendre un peu pour que i18n.js soit chargé
-        setTimeout(initLanguageDisplay, 100);
+        setTimeout(() => {
+            initLanguageDisplay();
+            checkAuthStatus();
+        }, 100);
     }
     
     // Écouter les changements de langue pour mettre à jour l'affichage
     window.addEventListener('languageChanged', () => {
         setTimeout(initLanguageDisplay, 50);
     });
+
+    // ==================== AUTH MANAGEMENT ====================
+    
+    // Vérifier le statut d'authentification et afficher le menu utilisateur approprié
+    function checkAuthStatus() {
+        const token = localStorage.getItem('auth_token');
+        const userStr = localStorage.getItem('auth_user');
+        
+        const loginBtn = document.getElementById('login-btn');
+        const userMenuContainer = document.getElementById('user-menu-container');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        const mobileUserMenu = document.getElementById('mobile-user-menu');
+        
+        if (token && userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                
+                // Desktop: Cacher le bouton de connexion, afficher le menu utilisateur
+                if (loginBtn) loginBtn.classList.add('hidden');
+                if (userMenuContainer) userMenuContainer.classList.remove('hidden');
+                
+                // Mobile: Cacher le bouton de connexion, afficher le menu utilisateur
+                if (mobileLoginBtn) mobileLoginBtn.classList.add('hidden');
+                if (mobileUserMenu) mobileUserMenu.classList.remove('hidden');
+                
+                // Afficher les informations de l'utilisateur
+                displayUserInfo(user);
+            } catch (error) {
+                console.error('Erreur lors de la lecture des données utilisateur:', error);
+                showLoginButton();
+            }
+        } else {
+            showLoginButton();
+        }
+    }
+    
+    // Afficher le bouton de connexion
+    function showLoginButton() {
+        const loginBtn = document.getElementById('login-btn');
+        const userMenuContainer = document.getElementById('user-menu-container');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        const mobileUserMenu = document.getElementById('mobile-user-menu');
+        
+        // Desktop
+        if (loginBtn) loginBtn.classList.remove('hidden');
+        if (userMenuContainer) userMenuContainer.classList.add('hidden');
+        
+        // Mobile
+        if (mobileLoginBtn) mobileLoginBtn.classList.remove('hidden');
+        if (mobileUserMenu) mobileUserMenu.classList.add('hidden');
+    }
+    
+    // Afficher les informations de l'utilisateur
+    function displayUserInfo(user) {
+        const userName = user.name || 'Utilisateur';
+        const userEmail = user.email || '';
+        const userRole = user.role || '';
+        
+        // Obtenir les initiales
+        const initials = userName.split(' ')
+            .map(word => word[0])
+            .join('')
+            .toUpperCase()
+            .substring(0, 2);
+        
+        // Afficher le rôle de manière lisible
+        const roleLabels = {
+            'user': 'Candidat',
+            'tourism_actor': 'Acteur touristique',
+            'actor': 'Acteur touristique',
+            'admin': 'Administrateur'
+        };
+        const roleLabel = roleLabels[userRole] || userRole;
+        
+        // Desktop - Mettre à jour l'affichage
+        const initialsEl = document.getElementById('user-initials');
+        const nameEl = document.getElementById('user-name-display');
+        const emailEl = document.getElementById('user-email-display');
+        const roleEl = document.getElementById('user-role-display');
+        
+        if (initialsEl) initialsEl.textContent = initials;
+        if (nameEl) nameEl.textContent = userName;
+        if (emailEl) emailEl.textContent = userEmail;
+        if (roleEl) roleEl.textContent = roleLabel;
+        
+        // Mobile - Mettre à jour l'affichage
+        const mobileNameEl = document.getElementById('mobile-user-name');
+        const mobileEmailEl = document.getElementById('mobile-user-email');
+        const mobileRoleEl = document.getElementById('mobile-user-role');
+        
+        if (mobileNameEl) mobileNameEl.textContent = userName;
+        if (mobileEmailEl) mobileEmailEl.textContent = userEmail;
+        if (mobileRoleEl) mobileRoleEl.textContent = roleLabel;
+    }
+    
+    // Basculer le menu utilisateur
+    function toggleUserMenu() {
+        const dropdown = document.getElementById('user-dropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+        }
+    }
+    
+    // Aller au dashboard selon le rôle
+    function goToDashboard() {
+        const userStr = localStorage.getItem('auth_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                
+                switch (user.role) {
+                    case 'user':
+                        window.location.href = '/candidate/dashboard';
+                        break;
+                    case 'tourism_actor':
+                    case 'actor':
+                        window.location.href = '/actor/dashboard';
+                        break;
+                    case 'admin':
+                        window.location.href = '/admin/dashboard';
+                        break;
+                    default:
+                        window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                window.location.href = '/';
+            }
+        }
+    }
+    
+    // Gérer la déconnexion
+    async function handleLogout() {
+        if (!confirm('Voulez-vous vous déconnecter ?')) {
+            return;
+        }
+        
+        try {
+            const token = localStorage.getItem('auth_token');
+            
+            if (token) {
+                // Appeler l'API de déconnexion
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).catch(err => console.log('Logout API error:', err));
+            }
+        } catch (error) {
+            console.error('Erreur lors de la déconnexion:', error);
+        } finally {
+            // Toujours nettoyer le localStorage et rediriger
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('auth_user');
+            
+            // Rediriger vers la page de login des acteurs
+            window.location.href = '/actor/login';
+        }
+    }
+    
+    // Fermer le menu utilisateur si on clique en dehors
+    document.addEventListener('click', (e) => {
+        const userMenuContainer = document.getElementById('user-menu-container');
+        const userDropdown = document.getElementById('user-dropdown');
+        
+        if (userMenuContainer && userDropdown && !userMenuContainer.contains(e.target)) {
+            userDropdown.classList.add('hidden');
+        }
+    });
 </script>
+
+<style>
+    /* S'assurer que le header et ses enfants n'ont pas de scroll */
+    header {
+        overflow: visible !important;
+    }
+    
+    header > div {
+        overflow: visible !important;
+    }
+    
+    header .container {
+        overflow: visible !important;
+    }
+    
+    /* S'assurer que les dropdowns sont au-dessus de tout */
+    #user-dropdown,
+    #lang-menu {
+        position: absolute;
+        z-index: 9999 !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    
+    #user-menu-container,
+    #language-selector {
+        overflow: visible !important;
+    }
+    
+    #auth-section {
+        overflow: visible !important;
+    }
+    
+    /* S'assurer que tous les éléments flex du header sont overflow-visible */
+    header .flex {
+        overflow: visible !important;
+    }
+</style>

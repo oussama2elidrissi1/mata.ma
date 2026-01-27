@@ -50,7 +50,7 @@
     if (response.status === 401) {
       localStorage.removeItem('auth_token');
       localStorage.removeItem('auth_user');
-      window.location.href = '/admin/login';
+      window.location.href = '/actor/login';
       throw new Error('Non authentifié');
     }
     
@@ -74,18 +74,18 @@
     const userStr = localStorage.getItem('auth_user');
     
     if (!token || !userStr) {
-      window.location.href = '/admin/login';
+      window.location.href = '/actor/login';
       return false;
     }
     
     try {
       const user = JSON.parse(userStr);
       if (user.role !== 'admin') {
-        window.location.href = '/admin/login';
+        window.location.href = '/actor/login';
         return false;
       }
     } catch (e) {
-      window.location.href = '/admin/login';
+      window.location.href = '/actor/login';
       return false;
     }
     
@@ -104,7 +104,7 @@
         } finally {
           localStorage.removeItem('auth_token');
           localStorage.removeItem('auth_user');
-          window.location.href = '/admin/login';
+          window.location.href = '/actor/login';
         }
       });
     }
