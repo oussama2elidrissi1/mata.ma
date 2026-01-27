@@ -2,7 +2,7 @@
     <div class="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
         <div class="flex items-center justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-4">
-                <div class="relative h-12 sm:h-14 md:h-16 w-auto">
+                <div class="relative h-14 sm:h-16 md:h-20 lg:h-24 w-auto">
                     @php
                         $logoSetting = \App\Models\Setting::where('key', 'site_logo')->first();
                         $logoPath = $logoSetting && $logoSetting->value_fr ? asset('storage/' . $logoSetting->value_fr) : asset('images/Logo.png');
@@ -10,8 +10,8 @@
                     <img 
                         src="{{ $logoPath }}" 
                         alt="MATA Logo"
-                        class="object-contain h-full w-auto"
-                        style="max-width: 120px; sm:max-width: 150px; md:max-width: 200px;"
+                        class="object-contain h-full w-auto max-w-full"
+                        style="max-width: clamp(140px, 20vw, 250px);"
                         id="header-logo"
                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 80%22%3E%3Ctext x=%2210%22 y=%2245%22 font-size=%2236%22 font-weight=%22900%22 fill=%22%23CC0000%22%3EMATA%3C/text%3E%3C/svg%3E'"
                     />

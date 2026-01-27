@@ -13,7 +13,8 @@
                 <img 
                     src="{{ $logoPath }}" 
                     alt="MATA Logo"
-                    class="h-16 sm:h-20 w-auto"
+                    class="h-20 sm:h-24 md:h-28 lg:h-32 w-auto max-w-full object-contain"
+                    style="max-width: 280px;"
                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 80%22%3E%3Ctext x=%2210%22 y=%2245%22 font-size=%2236%22 font-weight=%22900%22 fill=%22%23CC0000%22%3EMATA%3C/text%3E%3C/svg%3E'"
                 />
             </div>
