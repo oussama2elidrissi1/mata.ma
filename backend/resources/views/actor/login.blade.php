@@ -77,7 +77,7 @@
                     // Rediriger selon le rôle
                     switch(user.role) {
                         case 'admin':
-                            window.location.href = '/admin/dashboard';
+                            window.location.href = '/admin  ';
                             break;
                         case 'actor':
                             window.location.href = '/actor/dashboard';
